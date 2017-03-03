@@ -464,6 +464,16 @@ Timeout errors have a `.timeout` property.
     const req = request.get('/some.json');
     req.pipe(stream);
 
+  What you _can't_ do is use the `Response.pipe` like this:
+
+    const stream = fs.createWriteStream('path/to/my.json');
+    const req = request.get('/some.json');
+    req.end(function (err, response) {
+      response.pipe(stream);
+    });
+
+  This will break in various ways and for various reasons and should be avoided at all costs.
+
 ## Multipart requests
 
   SuperAgent is also great for _building_ multipart requests for which it provides methods `.attach()` and `.field()`.
